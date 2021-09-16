@@ -22,8 +22,8 @@ cp -r temp/packages/utils/cpulimit packages/cpulimit
 cp -r temp/luci/applications/luci-app-eqos luci/applications/luci-app-eqos
 
 # Add luci-app-gowebdav
-cp -r temp/luci/applications/luci-app-gowebdav luci/applications/luci-app-gowebdav
-cp -r temp/packages/net/gowebdav packages/net/gowebdav
+# cp -r temp/luci/applications/luci-app-gowebdav luci/applications/luci-app-gowebdav
+# cp -r temp/packages/net/gowebdav packages/net/gowebdav
 
 # Add luci-proto-modemmanager
 cp -r temp/luci/protocols/luci-proto-modemmanager luci/protocols/luci-proto-modemmanager
@@ -33,8 +33,8 @@ rm -rf packages/admin/netdata
 
 cp -r temp/packages/admin/netdata packages/admin/netdata
 
-#Add passwall
-cp -r temp/luci/applications/luci-app-passwall luci/applications/
+
+
 
 #Add openclash
 cp -r temp/luci/applications/luci-app-openclash luci/applications/
