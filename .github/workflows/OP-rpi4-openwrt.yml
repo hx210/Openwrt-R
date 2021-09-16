@@ -312,7 +312,7 @@ jobs:
         if: steps.organizer.outputs.status == 'success'
         with:
           name: FIRMWARE
-          path: ${{ FIRMWAREQ }}
+          path: ${{ env.FIRMWAREQ }}
 
       - name: Upload Firmware To WeTransfer精简
         if: steps.organize.outputs.ORGANIZE_STATUS == 'success' && env.UPLOAD_WETRANSFER == 'true'
