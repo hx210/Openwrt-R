@@ -37,7 +37,7 @@ cp -r temp/packages/admin/netdata packages/admin/netdata
 
 
 #Add openclash
-cp -r temp/luci/applications/luci-app-openclash luci/applications/
+# cp -r temp/luci/applications/luci-app-openclash luci/applications/
 
 
 # Add luci-app-smartdns
