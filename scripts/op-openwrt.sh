@@ -41,7 +41,7 @@ git clone --depth=1 https://github.com/hx210/luci-app-netdata
 # cp -rf openwrt-packages/luci-app-openclash/ need/
 
 # Add luci-app-passwall
-git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall
+# git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall
 
 
 
