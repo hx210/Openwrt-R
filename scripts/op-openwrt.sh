@@ -15,6 +15,8 @@
 
 # Clone community packages to package/community
 mkdir package/community
+mkdir package/community1
+
 pushd package/community
 mkdir need
 git clone --depth=1 https://github.com/kiddin9/openwrt-packages
@@ -30,10 +32,7 @@ cp -rf openwrt-packages/luci-theme-edge/ need/
 #Add Pushbot
 cp -rf openwrt-packages/luci-app-pushbot/ need/
 
-# Add OpenClash
-git clone --depth=1 -b master https://github.com/vernesong/OpenClash
-
-git clone --depth=1 https://github.com/hx210/luci-app-netdata
+cp -rf openwrt-packages/luci-app-argon-config/ need/
 
 
 
@@ -43,9 +42,20 @@ git clone --depth=1 https://github.com/hx210/luci-app-netdata
 # Add luci-app-passwall
 # git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall
 
-
-
 rm -rf openwrt-packages/
+popd
+
+pushd package/community1
+
+#Add Theme argon
+git clone --depth=1 https://github.com/jerrykuku/luci-theme-argon.git 
+
+# Add OpenClash
+git clone --depth=1 -b master https://github.com/vernesong/OpenClash
+
+git clone --depth=1 https://github.com/hx210/luci-app-netdata
+
+
 popd
 
 # Mod zzz-default-settings
