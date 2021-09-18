@@ -60,7 +60,6 @@ git clone --depth=1 https://github.com/tty228/luci-app-serverchan
 
 #Add 实时监控中文版
 git clone --depth=1 https://github.com/hx210/luci-app-netdata
-rm -rf ../lean/luci-app-netdata
 
 #Add diskman文件管理挂载
 git clone --depth=1 https://github.com/lisaac/luci-app-diskman
