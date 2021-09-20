@@ -15,11 +15,19 @@ uci set network.lan.gateway='192.168.22.1'                                   # I
 #uci set network.lan.broadcast='192.168.22.255'                               # IPv4 广播
 uci set network.lan.dns='192.168.22.1'                         # DNS(多个DNS要用空格分开)
 #uci set network.lan.delegate='0'                                            # 去掉LAN口使用内置的 IPv6 管理
-uci commit network                                                          # 不要删除跟注释,除非上面全部删除或注释掉了
+#分别对应最大分配数量网络分配起始基址  租用地址的到期时间
+uci set dhcp.lan.limit='180'
+uci set dhcp.lan.start='70'
+uci set dhcp.lan.leasetime='200h'
+#禁用dhcp日志 启用删掉即可
+uci set dhcp.@dnsmasq[0].quietdhcp='1'
+uci set vlmcsd.config.enabled='0'
 #uci set dhcp.lan.ignore='1'                                                 # 关闭DHCP功能
 #uci commit dhcp                                                             # 跟‘关闭DHCP功能’联动,同时启用或者删除跟注释
 uci set system.@system[0].hostname='OpenWrt-G'                            # 修改主机名称为OpenWrt-123
 
+
+uci commit
 # Disable autostart by default for some packages
 cd /etc/rc.d
 rm -f S98udptools || true
