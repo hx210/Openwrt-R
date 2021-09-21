@@ -14,6 +14,7 @@ Welcome(){
     echo -e "\trtools nginx: 切换为nginx\n"
     echo -e "\trtools ipv6wanstart: 启用ipv6\n"
     echo -e "\trtools ipv6wanstop: 关闭ipv6\n"
+    echo -e "\trtools netdata: 安装实时监控netdata\n"    
 
     # echo -e "Optional Usage:"
     # echo -e "\trtools server: "
@@ -95,45 +96,23 @@ elif [[ $1 = "ipv6wanstop" ]]; then
   
     Applychanges
     
-# elif [[ $1 = "remove" ]]; then
-#     echo -e "${Green_font_prefix}\nRemove IPV6 modules...\n${Font_color_suffix}"
-#     opkg remove --force-removal-of-dependent-packages ipv6helper kmod-sit odhcp6c luci-proto-ipv6 ip6tables kmod-ipt-nat6 odhcpd-ipv6only kmod-ip6tables-extra
-#     echo -e "${Green_font_prefix}\nIPV6 modules remove successfully.\n${Font_color_suffix}"
-#     echo -e "${Green_font_prefix}Revert IPV6 configurations...\n${Font_color_suffix}"
-    
-#     # Remove wan6 dhcp configurations
-#     uci delete dhcp.wan6.ra
-#     uci delete dhcp.wan6.dhcpv6
-#     uci delete dhcp.wan6.ndp
-    
-#     # Remove lan dhcp configurations
-#     uci delete dhcp.lan.dhcpv6
-#     uci delete dhcp.lan.ndp
-#     uci delete dhcp.lan.ra
-#     uci delete dhcp.lan.ra_management
-#     uci delete dhcp.lan.ra_default
-    
-#     # Enable IPV6 ula prefix
-#     sed -i 's/#.*\toption ula/\toption ula/g' /etc/config/network
-    
-#     # Disable IPV6 dns resolution
-#     uci set dhcp.@dnsmasq[0].filter_aaaa=1
-    
-#     # Restore mwan3 balance strategy
-#     uci set mwan3.balanced.last_resort=unreachable
-    
-#     # Commit changes
-#     uci commit
-    
-#     # Restore mwan3 ip6tables rules
-#     rm /lib/mwan3/mwan3.sh
-#     cp /lib/mwan3/mwan3.sh.orig /lib/mwan3/mwan3.sh
-    
-#     rm -f /etc/opkg/ipv6-installed
-    
-#     echo -e "${Green_font_prefix}IPV6 remove successfully.\n${Font_color_suffix}"
-    
-#     RebootConfirm
+elif [[ $1 = "netdata" ]]; then
+    echo -e "${Green_font_prefix}\n安装netdata...\n${Font_color_suffix}"
+    docker run -d --name=netdata \
+  -p 29999:19999 \
+  -v netdataconfig:/etc/netdata \
+  -v netdatalib:/var/lib/netdata \
+  -v netdatacache:/var/cache/netdata \
+  -v /etc/passwd:/host/etc/passwd:ro \
+  -v /etc/group:/host/etc/group:ro \
+  -v /proc:/host/proc:ro \
+  -v /sys:/host/sys:ro \
+  -v /etc/os-release:/host/etc/os-release:ro \
+  --restart unless-stopped \
+  --cap-add SYS_PTRACE \
+  --security-opt apparmor=unconfined \
+  netdata/netdata
+    echo -e "${Green_font_prefix}\n安装成功请从ip:29999访问...\n${Font_color_suffix}"
     
 # elif [[ $1 = "clean" ]]; then
 #     echo -e "${Green_font_prefix}\nRemove mwan3 modules...\n${Font_color_suffix}"
