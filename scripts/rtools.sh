@@ -14,7 +14,7 @@ Welcome(){
     echo -e "\trtools nginx: 切换为nginx\n"
     echo -e "\trtools ipv6wanstart: 启用ipv6\n"
     echo -e "\trtools ipv6wanstop: 关闭ipv6\n"
-    echo -e "\trtools netdata: 安装实时监控netdata\n"    
+    echo -e "\trtools docker: 一键配置docker 配置保存在opt下载保存在opt1\n"    
 
     # echo -e "Optional Usage:"
     # echo -e "\trtools server: "
@@ -96,8 +96,8 @@ elif [[ $1 = "ipv6wanstop" ]]; then
   
     Applychanges
     
-elif [[ $1 = "netdata" ]]; then
-    echo -e "${Green_font_prefix}\n安装netdata...\n${Font_color_suffix}"
+elif [[ $1 = "docker" ]]; then
+    echo -e "${Green_font_prefix}\n正在安装netdata...\n${Font_color_suffix}"
     docker run -d --name=netdata \
   -p 29999:19999 \
   -v netdataconfig:/etc/netdata \
@@ -112,8 +112,30 @@ elif [[ $1 = "netdata" ]]; then
   --cap-add SYS_PTRACE \
   --security-opt apparmor=unconfined \
   netdata/netdata
-    echo -e "${Green_font_prefix}\n安装成功请从ip:29999访问...\n${Font_color_suffix}"
-    
+    echo -e "${Green_font_prefix}\n正在配置自动更新镜像...\n${Font_color_suffix}"    
+    docker run -d \
+        --name watchtower \
+        --restart unless-stopped  \
+        -e TZ=Asia/Shanghai \
+        -v /var/run/docker.sock:/var/run/docker.sock \
+        containrrr/watchtower \
+        --cleanup \
+        -s "0 0 2 * * *"   
+    echo -e "${Green_font_prefix}\n正在配置在线网盘...\n${Font_color_suffix}" 
+    mount --make-shared /opt1
+    sed -i '3i mount --make-shared /opt1' /etc/rc.local        
+    docker run -d \
+        --name clouddrive \
+        --restart unless-stopped \
+        --env FuseUID=0 --env FuseGID=0\
+        -v /opt1/CloudNAS:/CloudNAS:shared \
+        -v /opt/data/docker/CloudNAS:/Config \
+        -p 9798:9798 \
+        --privileged \
+        --device /dev/fuse:/dev/fuse \
+        cloudnas/clouddrive    
+    echo -e "${Green_font_prefix}\n安装成功请从netdata从ip:29999访问 在线网盘从9798\n${Font_color_suffix}"
+
 # elif [[ $1 = "clean" ]]; then
 #     echo -e "${Green_font_prefix}\nRemove mwan3 modules...\n${Font_color_suffix}"
 #     opkg remove mwan3 luci-app-mwan3 luci-app-mwan3helper luci-app-syncdial

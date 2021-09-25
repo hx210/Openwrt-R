@@ -302,7 +302,7 @@ jobs:
           cd ${FIRMWARE}
           mkdir Streamlined-firmware
           find -name "*ext4-factory*" | xargs -i cp -rf {} .//Streamlined-firmware/
-          find -name "*squashfs.buildinfo*" | xargs -i cp -rf {} .//Streamlined-firmware/
+          find -name "*squashfs-factory*" | xargs -i cp -rf {} .//Streamlined-firmware/
           find -name "*config.buildinfo*" | xargs -i cp -rf {} .//Streamlined-firmware/
           cd Streamlined-firmware
           echo "FIRMWAREQ=$PWD" >> $GITHUB_ENV

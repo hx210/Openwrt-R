@@ -16,6 +16,8 @@ uci set turboacc.config.sfe_flow='0'
 uci set turboacc.config.hw_flow='0'
 uci set turboacc.config.fullcone_nat='1'
 uci set turboacc.config.bbr_cca='1'
+uci set turboacc.config.sw_flow='0'
+
 
 
 #分别对应最大分配数量网络分配起始基址  租用地址的到期时间
