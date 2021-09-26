@@ -1,11 +1,11 @@
 # Set default theme to luci-theme-argon
 uci set luci.main.mediaurlbase='/luci-static/argon'
 
-uci set network.lan.ipaddr='192.168.22.1'                                    # IPv4 地址(openwrt后台地址)
+uci set network.lan.ipaddr='10.0.0.1'                                    # IPv4 地址(openwrt后台地址)
 uci set network.lan.netmask='255.255.255.0'                                 # IPv4 子网掩码
-#uci set network.lan.gateway='192.168.22.1'                                   # IPv4 网关
-#uci set network.lan.broadcast='192.168.22.255'                               # IPv4 广播
-uci set network.lan.dns='192.168.22.1'                         # DNS(多个DNS要用空格分开)
+#uci set network.lan.gateway='10.0.0.1'                                   # IPv4 网关
+#uci set network.lan.broadcast='10.0.0.255'                               # IPv4 广播
+uci set network.lan.dns='10.0.0.1'                         # DNS(多个DNS要用空格分开)
 #uci set network.lan.delegate='0'                                            # 去掉LAN口使用内置的 IPv6 管理
                                                         # 不要删除跟注释,除非上面全部删除或注释掉了
 #uci set dhcp.lan.ignore='1'                                                 # 关闭DHCP功能
