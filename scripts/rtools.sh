@@ -122,6 +122,10 @@ elif [[ $1 = "docker" ]]; then
         --cleanup \
         -s "0 0 2 * * *"   
     echo -e "${Green_font_prefix}\n正在配置在线网盘...\n${Font_color_suffix}" 
+    cat <<EOF > /etc/systemd/system/docker.service.d/clear_mount_propagation_flags.conf
+[Service]
+MountFlags=shared
+EOF
     mount --make-shared /opt1
     sed -i '3i mount --make-shared /opt1' /etc/rc.local        
     docker run -d \
