@@ -15,6 +15,7 @@ Welcome(){
     echo -e "\trtools ipv6wanstart: 启用ipv6\n"
     echo -e "\trtools ipv6wanstop: 关闭ipv6\n"
     echo -e "\trtools docker: 一键配置docker 配置保存在opt下载保存在opt1\n"    
+    echo -e "\trtools uhttpssl: 将证书放在/etc/ssl/ 分别命名为 Rssl. crt/key \n"    
 
     # echo -e "Optional Usage:"
     # echo -e "\trtools server: "
@@ -140,12 +141,12 @@ EOF
         cloudnas/clouddrive    
     echo -e "${Green_font_prefix}\n安装成功请从netdata从ip:29999访问 在线网盘从9798\n${Font_color_suffix}"
 
-# elif [[ $1 = "clean" ]]; then
-#     echo -e "${Green_font_prefix}\nRemove mwan3 modules...\n${Font_color_suffix}"
-#     opkg remove mwan3 luci-app-mwan3 luci-app-mwan3helper luci-app-syncdial
-#     echo -e "${Green_font_prefix}Mwan3 modules remove successfully.\n${Font_color_suffix}"
+elif [[ $1 = "uhttpssl" ]]; then
+    uci set uhttpd.main.cert='/etc/ssl/Rssl.crt'
+    uci set uhttpd.main.key='/etc/ssl/Rssl.key'
+    /etc/init.d/uhttpd restart
+    echo -e "${Green_font_prefix}ssl配置成功.\n${Font_color_suffix}"
     
-#     RebootConfirm
     
 fi
 
