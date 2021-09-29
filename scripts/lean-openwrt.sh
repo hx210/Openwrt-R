@@ -38,7 +38,8 @@ rm -rf openwrt-packages/
 # Add Lienol's Packages
 # git clone --depth=1 https://github.com/Lienol/openwrt-package
 rm -rf ../lean/luci-app-kodexplorer
-
+rm -rf openwrt-package/verysync
+rm -rf openwrt-package/luci-app-verysync
 # Add luci-app-passwall
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall
 
@@ -123,7 +124,7 @@ export orig_version=$(cat "zzz-default-settings" | grep DISTRIB_REVISION= | awk 
 export date_version=$(date -d "$(rdate -n -4 -p ntp.aliyun.com)" +'%Y-%m-%d')
 sed -i "s/${orig_version}/${orig_version} (${date_version})/g" zzz-default-settings
 sed -i "s/OpenWrt /R @ OpenWrt /g" zzz-default-settings
-       # 增加个性名字${Author}默认为你的github账号
+
 
 sed -i '/CYXluq4wUazHjmCDBCqXF/d' zzz-default-settings                                                            # 设置密码为空
 
