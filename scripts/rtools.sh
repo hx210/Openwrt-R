@@ -109,6 +109,7 @@ elif [[ $1 = "docker" ]]; then
   -v /proc:/host/proc:ro \
   -v /sys:/host/sys:ro \
   -v /etc/os-release:/host/etc/os-release:ro \
+  -e TZ=Asia/Shanghai \
   --restart unless-stopped \
   --cap-add SYS_PTRACE \
   --security-opt apparmor=unconfined \
@@ -138,6 +139,7 @@ EOF
         -p 9798:9798 \
         --privileged \
         --device /dev/fuse:/dev/fuse \
+        -e TZ=Asia/Shanghai \  
         cloudnas/clouddrive    
     echo -e "${Green_font_prefix}\n安装成功请从netdata从ip:29999访问 在线网盘从9798\n${Font_color_suffix}"
 
