@@ -15,7 +15,9 @@ Welcome(){
     echo -e "\trtools ipv6wanstart: 启用ipv6\n"
     echo -e "\trtools ipv6wanstop: 关闭ipv6\n"
     echo -e "\trtools docker: 一键配置docker 配置保存在opt下载保存在opt1\n"    
-    echo -e "\trtools uhttpssl: 将证书放在/etc/ssl/ 分别命名为 Rssl. crt/key \n"    
+    echo -e "\trtools uhttpssl: 将证书放在/etc/ssl/ 分别命名为 Rssl. crt/key \n"
+    echo -e "\TG群链接 https://t.me/R2_XR \n"    
+
 
     # echo -e "Optional Usage:"
     # echo -e "\trtools server: "
