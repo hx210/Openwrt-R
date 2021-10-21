@@ -321,7 +321,7 @@ jobs:
           name: OP-lede
           tag_name: lede
           files: ${{ env.FIRMWAREQ }}
-          token: ${{ secrets.WORKFLOW_TOKEN }}
+          token: ${{ secrets.REPO_TOKEN }}
 
       - name: Delete Artifacts
         uses: geekyeggo/delete-artifact@v1
