@@ -113,7 +113,7 @@ elif [[ $1 = "docker" ]]; then
   --restart unless-stopped \
   --cap-add SYS_PTRACE \
   --security-opt apparmor=unconfined \
-  netdata/netdata
+  netdata/netdata:stable
     echo -e "${Green_font_prefix}\n正在配置自动更新镜像...\n${Font_color_suffix}"    
     docker run -d \
         --name watchtower \
