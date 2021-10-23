@@ -30,6 +30,11 @@ uci set dhcp.@dnsmasq[0].quietdhcp='1'
 uci set upnpd.config.enabled='1'
 #关闭kms
 uci set vlmcsd.config.enabled='0'
+
+#开启uhttpd的外网访问
+uci set uhttpd.main.rfc1918_filter='0'
+# /etc/init.d/uhttpd restart
+
 uci commit
 
 # Disable opkg signature check
