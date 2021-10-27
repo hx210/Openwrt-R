@@ -320,7 +320,7 @@ jobs:
         with:
           name: OP-lede
           tag_name: lede
-          files: ${{ env.FIRMWAREQ }}
+          files: ${FIRMWAREQ}
           token: ${{ secrets.REPO_TOKEN }}
 
       - name: Delete Artifacts
