@@ -324,6 +324,29 @@ jobs:
           curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=我亲爱的✨主人✨：您的${{ env.SUBTARGET }}-固件顺利编译完成了！💐https://github.com/hx210/Openwrt-R -$(cat wetransfer1.log | grep https) #${{ env.SUBTARGET }}" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
 
 
+      - name: Create release
+        id: create_release
+        uses: ncipollo/release-action@v1 #https://github.com/ncipollo/release-action/tree/main
+        with:
+          name: 4b-${{ env.latest_release }}
+          allowUpdates: true
+          tag: ${{ env.latest_release }}
+          commit: master
+          replacesArtifacts: true
+          token: ${{ secrets.REPO_TOKEN }}
+          artifacts: ${{ env.FIRMWAREQ }}
+
+      - name: Create release1
+        id: create_release
+        uses: ncipollo/release-action@v1 #https://github.com/ncipollo/release-action/tree/main
+        with:
+          name: 4b1-${{ env.latest_release }}
+          allowUpdates: true
+          tag: ${{ env.latest_release }}
+          commit: master
+          replacesArtifacts: true
+          token: ${{ secrets.REPO_TOKEN }}
+          artifacts: ./openwrt/bin/targets/bcm27xx/bcm2711/Streamlined-firmware/
 
       - name: Delete Artifacts
         uses: geekyeggo/delete-artifact@v1
