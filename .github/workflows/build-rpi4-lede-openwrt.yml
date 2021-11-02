@@ -305,6 +305,14 @@ jobs:
           name: ${{ env.SUBTARGET }}
           path: ${{ env.FIRMWAREQ }}
 
+      - name: Upload To Release
+        uses: softprops/action-gh-release@v1 #https://github.com/softprops/action-gh-release
+        with:
+          name: OP-lede
+          tag_name: lede
+          files: ${{ env.FIRMWAREQ }}
+          token: ${{ secrets.REPO_TOKEN }}
+          
       - name: Upload Firmware To WeTransfer精简
         if: steps.organize.outputs.ORGANIZE_STATUS == 'success' && env.UPLOAD_WETRANSFER == 'true'
         run: |
@@ -315,13 +323,7 @@ jobs:
         run: |
           curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=我亲爱的✨主人✨：您的${{ env.SUBTARGET }}-固件顺利编译完成了！💐https://github.com/hx210/Openwrt-R -$(cat wetransfer1.log | grep https) #${{ env.SUBTARGET }}" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
 
-      - name: Upload To Release
-        uses: softprops/action-gh-release@v1 #https://github.com/softprops/action-gh-release
-        with:
-          name: OP-lede
-          tag_name: lede
-          files: ${FIRMWAREQ}
-          token: ${{ secrets.REPO_TOKEN }}
+
 
       - name: Delete Artifacts
         uses: geekyeggo/delete-artifact@v1
