@@ -308,7 +308,7 @@ jobs:
           name: OP-Lede
           allowUpdates: true
           tag: lede
-          commit: master
+          commit: main
           replacesArtifacts: true
           token: ${{ secrets.REPO_TOKEN }}
           artifacts: ${{ env.FIRMWAREQ }}
