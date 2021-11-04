@@ -311,7 +311,7 @@ jobs:
           commit: main
           replacesArtifacts: true
           token: ${{ secrets.REPO_TOKEN }}
-          artifacts: ${{ env.FIRMWAREQ }}
+          artifacts: ${{ env.FIRMWAREQ }}/*
         
       - name: Delete Artifacts
         uses: geekyeggo/delete-artifact@v1
