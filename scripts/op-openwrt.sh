@@ -60,7 +60,7 @@ git clone --depth=1 https://github.com/jerrykuku/luci-theme-argon.git
 
 # Add OpenClash
 git clone -b master  https://github.com/vernesong/OpenClash.git package/luci-app-openclash
-
+#Add 实时监控中文版
 git clone --depth=1 https://github.com/hx210/luci-app-netdata
 
 

@@ -6,11 +6,11 @@
 # Blog: https://p3terx.com
 #=================================================
 
-name: OP-master(0.0) MIPS-R3G OpenWrt
+name: Max(0.0) Raspberry Pi 4 OpenWrt
 
 on:
   repository_dispatch:
-    types: [op, r3g, Source Code Update]
+    types: [op, rpi4, Source Code Update]
   workflow_dispatch:
     inputs:
       ssh:
@@ -24,10 +24,10 @@ on:
 #    types: started
 
 env:
-  TOOLCHAIN_TAG: openwrt-openwrt-master
-  TOOLCHAIN_NAME: toolchain-image-openwrt-openwrt-master-ramips-mt7621.img
-  CONFIG_FILE: config/mips/r3g.config
-  DIY_SH: scripts/op-openwrt.sh
+  TOOLCHAIN_TAG: hx210-lede-master
+  TOOLCHAIN_NAME: toolchain-image-hx210-lede-master-bcm27xx-bcm2711.img
+  CONFIG_FILE: config/bcm27xx/rpi4-lean-target.config
+  DIY_SH: scripts/lean-openwrt.sh
   WEBROOT: /data/dnmp/www/openwrt.cc
   UPLOAD_RCLONE: true
   UPLOAD_WETRANSFER: true
@@ -81,8 +81,8 @@ jobs:
         run: |
           cd $OPENWRTROOT
           mkdir customfeeds
-          git clone --depth=1 https://github.com/openwrt/packages customfeeds/packages
-          git clone --depth=1 https://github.com/openwrt/luci customfeeds/luci
+          git clone --depth=1 https://github.com/coolsnowwolf/packages customfeeds/packages
+          git clone --depth=1 https://github.com/coolsnowwolf/luci customfeeds/luci
           chmod +x ../scripts/*.sh
           ../scripts/hook-feeds.sh
 
@@ -95,10 +95,15 @@ jobs:
         run: |
           [ -e files ] && mv files $OPENWRTROOT/files
           [ -e $CONFIG_FILE ] && mv $CONFIG_FILE $OPENWRTROOT/.config
-          cat config/mips/mips-lean-extra.config >> $OPENWRTROOT/.config
+          cat config/bcm27xx/rpi-lean-extra.config >> $OPENWRTROOT/.config
           cd $OPENWRTROOT
+          echo -e "CONFIG_USB_LAN78XX=y\nCONFIG_USB_NET_DRIVERS=y" >> target/linux/bcm27xx/bcm2711/config-5.4
+          mkdir -p files/lib/firmware/brcm/
+          wget -q https://raw.githubusercontent.com/openwrt/cypress-nvram/master/brcmfmac43455-sdio.raspberrypi%2C4-model-b.txt -O files/lib/firmware/brcm/brcmfmac43455-sdio.raspberrypi,4-compute-module.txt
           ../$DIY_SH
+          ../scripts/preset-clash-core.sh armv8
           ../scripts/preset-terminal-tools.sh
+          ../scripts/enable-rpi4-wifi.sh
           ../scripts/updata-feeds.sh
 
       - name: SSH远程连接（配置固件）
@@ -152,11 +157,20 @@ jobs:
           sed -i "s/target\//$TARGET\//g" distfeeds*.conf
           sed -i "s/platform/$PLATFORM/g" distfeeds*.conf
           cd $OPENWRTROOT
+          echo "dtparam=i2c_arm=on,audio=on" >> target/linux/bcm27xx/image/config.txt
+
+          echo "arm_freq=2340" >> target/linux/bcm27xx/image/config.txt
+          echo "over_voltage=8" >> target/linux/bcm27xx/image/config.txt
+
           mkdir -p files/etc/uci-defaults/
-          cp ../scripts/init-settings-mips.sh files/etc/uci-defaults/99-init-settings
+          cp ../scripts/init-settings.sh files/etc/uci-defaults/99-init-settings
           mkdir -p files/etc/opkg
           cp ../data/opkg/distfeeds.conf.mirror files/etc/opkg
+          mkdir -p files/www/snapshots
+          cp -r bin/targets files/www/snapshots
           cp ../data/opkg/distfeeds.conf files/etc/opkg
+          mkdir -p files/bin
+          cp ../scripts/rtools.sh files/bin/rtools
           make package/install -j$(nproc) || make package/install -j1 V=s
           make target/install -j$(nproc) || make target/install -j1 V=s
           make checksum
@@ -278,9 +292,9 @@ jobs:
         run: |
           cd ${FIRMWARE}
           mkdir Streamlined-firmware
-          find -name "*sysupgrade*" | xargs -i cp -rf {} .//Streamlined-firmware/
-          find -name "*config.buildinfo*" | xargs -i cp -rf {} .//Streamlined-firmware/
-
+          find -name "*ext4-factory*" | xargs -i cp -rf {} .//Streamlined-firmware/
+          find -name "*squashfs-factory*" | xargs -i cp -rf {} .//Streamlined-firmware/
+          find -name "*config.buildinfo*" | xargs -i cp -rf {} .//Streamlined-firmware/${{ env.SUBTARGET }}.config
           cd Streamlined-firmware
           echo "FIRMWAREQ=$PWD" >> $GITHUB_ENV
 
@@ -291,6 +305,14 @@ jobs:
           name: ${{ env.SUBTARGET }}
           path: ${{ env.FIRMWAREQ }}
 
+      - name: Upload To Release
+        uses: softprops/action-gh-release@v1 #https://github.com/softprops/action-gh-release
+        with:
+          name: OP-lede
+          tag_name: lede
+          files: ${{ env.FIRMWAREQ }}
+          token: ${{ secrets.REPO_TOKEN }}
+          
       - name: Upload Firmware To WeTransfer精简
         if: steps.organize.outputs.ORGANIZE_STATUS == 'success' && env.UPLOAD_WETRANSFER == 'true'
         run: |
@@ -301,18 +323,31 @@ jobs:
         run: |
           curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=我亲爱的✨主人✨：您的${{ env.SUBTARGET }}-固件顺利编译完成了！💐https://github.com/hx210/Openwrt-R -$(cat wetransfer1.log | grep https) #${{ env.SUBTARGET }}" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
 
+
       - name: Create release
         id: create_release
         uses: ncipollo/release-action@v1 #https://github.com/ncipollo/release-action/tree/main
         with:
-          name: OP-Lede
+          name: 4b-${{ env.latest_release }}
           allowUpdates: true
-          tag: lede
-          commit: main
+          tag: ${{ env.latest_release }}
+          commit: master
           replacesArtifacts: true
           token: ${{ secrets.REPO_TOKEN }}
-          artifacts: ${{ env.FIRMWAREQ }}/*
-        
+          artifacts: ${{ env.FIRMWAREQ }}
+
+      - name: Create release1
+        id: create_release1
+        uses: ncipollo/release-action@v1 #https://github.com/ncipollo/release-action/tree/main
+        with:
+          name: 4b1-${{ env.latest_release }}
+          allowUpdates: true
+          tag: ${{ env.latest_release }}
+          commit: master
+          replacesArtifacts: true
+          token: ${{ secrets.REPO_TOKEN }}
+          artifacts: ./openwrt/bin/targets/bcm27xx/bcm2711/Streamlined-firmware/
+
       - name: Delete Artifacts
         uses: geekyeggo/delete-artifact@v1
         with:

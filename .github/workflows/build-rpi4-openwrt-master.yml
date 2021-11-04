@@ -6,7 +6,7 @@
 # Blog: https://p3terx.com
 #=================================================
 
-name: Max(OP) Raspberry Pi 4 OpenWrt
+name: V(OP) Raspberry Pi 4 OpenWrt
 
 on:
   repository_dispatch:
@@ -84,6 +84,7 @@ jobs:
           git clone --depth=1 https://github.com/openwrt/packages customfeeds/packages
           git clone --depth=1 https://github.com/openwrt/luci customfeeds/luci
           chmod +x ../scripts/*.sh
+          ../scripts/hook-feeds.sh
 
       - name: Install Feeds
         run: |
@@ -94,7 +95,7 @@ jobs:
         run: |
           [ -e files ] && mv files $OPENWRTROOT/files
           [ -e $CONFIG_FILE ] && mv $CONFIG_FILE $OPENWRTROOT/.config
-          cat config/dev/dev.config >> $OPENWRTROOT/.config
+          cat config/bcm27xx/rpi-lean-extra.config >> $OPENWRTROOT/.config
           cd $OPENWRTROOT
           mkdir -p files/lib/firmware/brcm/
           wget -q https://raw.githubusercontent.com/openwrt/cypress-nvram/master/brcmfmac43455-sdio.raspberrypi%2C4-model-b.txt -O files/lib/firmware/brcm/brcmfmac43455-sdio.raspberrypi,4-compute-module.txt
@@ -102,6 +103,8 @@ jobs:
           ../scripts/preset-clash-core.sh armv8
           ../scripts/preset-terminal-tools.sh
           ../scripts/enable-rpi4-wifi.sh
+          ../scripts/updata-feeds.sh
+
 
       - name: SSH远程连接（配置固件）
         env:
@@ -327,7 +330,18 @@ jobs:
       - name: 电报机器人信息通知
         run: |
           curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=我亲爱的✨主人✨：您的${{ env.SUBTARGET }}-固件顺利编译完成了！💐https://github.com/hx210/Openwrt-R -$(cat wetransfer1.log | grep https) #${{ env.SUBTARGET }}" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
-
+      - name: Create release
+        id: create_release
+        uses: ncipollo/release-action@v1 #https://github.com/ncipollo/release-action/tree/main
+        with:
+          name: OP-Lede
+          allowUpdates: true
+          tag: lede
+          commit: main
+          replacesArtifacts: true
+          token: ${{ secrets.REPO_TOKEN }}
+          artifacts: ${{ env.FIRMWAREQ }}/*
+      
       - name: Delete Artifacts
         uses: geekyeggo/delete-artifact@v1
         with:
