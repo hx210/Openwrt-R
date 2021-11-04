@@ -6,7 +6,7 @@
 # Blog: https://p3terx.com
 #=================================================
 # Modify default IP
-#sed -i 's/192.168.1.1/192.168.50.5/g' package/base-files/files/bin/config_generate
+# sed -i 's/192.168.1.1/10.0.0.1/g' package/base-files/files/bin/config_generate
 
 # Add luci-app-ssr-plus
 # pushd package/lean
@@ -21,11 +21,15 @@ pushd package/community
 mkdir need
 git clone --depth=1 https://github.com/kiddin9/openwrt-packages
 
-cp -rf openwrt-packages/aria2/ need/
-cp -rf openwrt-packages/luci-app-aria2/ need/
+# cp -rf openwrt-packages/aria2/ need/
+# cp -rf openwrt-packages/luci-app-aria2/ need/
 
 cp -rf openwrt-packages/gowebdav/ need/
 cp -rf openwrt-packages/luci-app-gowebdav/ need/
+
+cp -rf openwrt-packages/adguardhome/ need/
+cp -rf openwrt-packages/luci-app-adguardhome/ need/
+
 
 #添加edge主题
 cp -rf openwrt-packages/luci-theme-edge/ need/
@@ -35,12 +39,16 @@ cp -rf openwrt-packages/luci-app-pushbot/ need/
 cp -rf openwrt-packages/luci-app-argon-config/ need/
 
 
+#添加docker
+cp -rf openwrt-packages/luci-app-dockerman/ need/
+cp -rf openwrt-packages/luci-lib-docker/ need/
+
 
 
 # cp -rf openwrt-packages/luci-app-openclash/ need/
 
 # Add luci-app-passwall
-# git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall
+git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall
 
 rm -rf openwrt-packages/
 popd
@@ -51,7 +59,7 @@ pushd package/community1
 git clone --depth=1 https://github.com/jerrykuku/luci-theme-argon.git 
 
 # Add OpenClash
-git clone --depth=1 -b master https://github.com/vernesong/OpenClash
+git clone -b master  https://github.com/vernesong/OpenClash.git package/luci-app-openclash
 
 git clone --depth=1 https://github.com/hx210/luci-app-netdata
 
@@ -82,3 +90,13 @@ popd
 
 
 
+#add upx
+mkdir -p tools/ucl && wget -P tools/ucl https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/ucl/Makefile 
+mkdir -p tools/upx && wget -P tools/upx https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/upx/Makefile
+sed -i '23a\tools-y += ucl upx' tools/Makefile
+sed -i '/builddir dependencies/a\$(curdir)/upx/compile := $(curdir)/ucl/compile' tools/Makefile
+
+#update golang
+pushd feeds/packages/lang
+rm -rf golang && svn co https://github.com/openwrt/packages/trunk/lang/golang
+popd
