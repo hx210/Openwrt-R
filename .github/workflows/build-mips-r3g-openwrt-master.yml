@@ -97,6 +97,7 @@ jobs:
           [ -e $CONFIG_FILE ] && mv $CONFIG_FILE $OPENWRTROOT/.config
           cat config/mips/mips-lean-extra.config >> $OPENWRTROOT/.config
           cd $OPENWRTROOT
+          ../scripts/basic.sh
           ../$DIY_SH
           ../scripts/preset-terminal-tools.sh
           ../scripts/updata-feeds.sh
