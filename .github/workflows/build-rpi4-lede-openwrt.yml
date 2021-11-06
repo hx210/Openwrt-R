@@ -331,23 +331,12 @@ jobs:
         with:
           name: 4b-${{ env.latest_release }}
           allowUpdates: true
-          tag: ${{ env.latest_release }}
-          commit: master
+          tag: lede
+          commit: main
           replacesArtifacts: true
           token: ${{ secrets.REPO_TOKEN }}
-          artifacts: ${{ env.FIRMWAREQ }}
+          artifacts: ${{ env.FIRMWAREQ }}/*
 
-      - name: Create release1
-        id: create_release1
-        uses: ncipollo/release-action@v1 #https://github.com/ncipollo/release-action/tree/main
-        with:
-          name: 4b1-${{ env.latest_release }}
-          allowUpdates: true
-          tag: ${{ env.latest_release }}
-          commit: master
-          replacesArtifacts: true
-          token: ${{ secrets.REPO_TOKEN }}
-          artifacts: ./openwrt/bin/targets/bcm27xx/bcm2711/Streamlined-firmware/
 
       - name: Delete Artifacts
         uses: geekyeggo/delete-artifact@v1
