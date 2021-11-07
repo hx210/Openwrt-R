@@ -49,6 +49,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@main
 
+      - name: Show system
+        run: |
+          echo -e "Total CPU cores\t: $(nproc)"
+          cat /proc/cpuinfo | grep 'model name'
+          free -h
+          uname -a
+          [ -f /proc/version ] && cat /proc/version
+          [ -f /etc/issue.net ] && cat /etc/issue.net
+          [ -f /etc/issue ] && cat /etc/issue
+          ulimit -a
+
       - name: Initialization Environment
         env:
           DEBIAN_FRONTEND: noninteractive
@@ -191,6 +202,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@main
 
+      - name: Show system
+        run: |
+          echo -e "Total CPU cores\t: $(nproc)"
+          cat /proc/cpuinfo | grep 'model name'
+          free -h
+          uname -a
+          [ -f /proc/version ] && cat /proc/version
+          [ -f /etc/issue.net ] && cat /etc/issue.net
+          [ -f /etc/issue ] && cat /etc/issue
+          ulimit -a
+
       - name: Restore Variables
         run: |
           echo "OPENWRTROOT=$(echo '${{needs.Build.outputs.OPENWRTROOT}}')" >> $GITHUB_ENV
@@ -312,7 +334,7 @@ jobs:
           tag_name: lede
           files: ${{ env.FIRMWAREQ }}
           token: ${{ secrets.REPO_TOKEN }}
-          
+
       - name: Upload Firmware To WeTransfer精简
         if: steps.organize.outputs.ORGANIZE_STATUS == 'success' && env.UPLOAD_WETRANSFER == 'true'
         run: |
@@ -322,7 +344,6 @@ jobs:
       - name: 电报机器人信息通知
         run: |
           curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=我亲爱的✨主人✨：您的${{ env.SUBTARGET }}-固件顺利编译完成了！💐https://github.com/hx210/Openwrt-R -$(cat wetransfer1.log | grep https) #${{ env.SUBTARGET }}" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
-
 
       - name: Create release
         id: create_release

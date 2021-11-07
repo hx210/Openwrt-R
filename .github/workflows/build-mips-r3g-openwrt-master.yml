@@ -49,6 +49,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@main
 
+      - name: Show system
+        run: |
+          echo -e "Total CPU cores\t: $(nproc)"
+          cat /proc/cpuinfo | grep 'model name'
+          free -h
+          uname -a
+          [ -f /proc/version ] && cat /proc/version
+          [ -f /etc/issue.net ] && cat /etc/issue.net
+          [ -f /etc/issue ] && cat /etc/issue
+          ulimit -a
+
       - name: Initialization Environment
         env:
           DEBIAN_FRONTEND: noninteractive
@@ -177,6 +188,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
+
+      - name: Show system
+        run: |
+          echo -e "Total CPU cores\t: $(nproc)"
+          cat /proc/cpuinfo | grep 'model name'
+          free -h
+          uname -a
+          [ -f /proc/version ] && cat /proc/version
+          [ -f /etc/issue.net ] && cat /etc/issue.net
+          [ -f /etc/issue ] && cat /etc/issue
+          ulimit -a
 
       - name: Restore Variables
         run: |
@@ -313,7 +335,7 @@ jobs:
           replacesArtifacts: true
           token: ${{ secrets.REPO_TOKEN }}
           artifacts: ${{ env.FIRMWAREQ }}/*
-        
+
       - name: Delete Artifacts
         uses: geekyeggo/delete-artifact@v1
         with:
