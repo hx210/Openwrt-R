@@ -6,11 +6,11 @@
 # Blog: https://p3terx.com
 #=================================================
 
-name: Max(0.0) Raspberry Pi 4 OpenWrt
+name: backup(0.0) Raspberry Pi 4 OpenWrt
 
 on:
   repository_dispatch:
-    types: [op, rpi4, Source Code Update]
+    types: [op, rpi4]
   workflow_dispatch:
     inputs:
       ssh:
