@@ -99,3 +99,6 @@ svn co https://github.com/immortalwrt/immortalwrt/branches/master/tools/ucl tool
 pushd feeds/packages/lang
 rm -rf golang && svn co https://github.com/openwrt/packages/trunk/lang/golang
 popd
+
+# 最大连接数
+sed -i 's/16384/65535/g' package/kernel/linux/files/sysctl-nf-conntrack.conf
