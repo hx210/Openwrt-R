@@ -26,6 +26,16 @@ uci set vlmcsd.config.enabled='0'
 #uci commit dhcp                                                             # 跟‘关闭DHCP功能’联动,同时启用或者删除跟注释
 uci set system.@system[0].hostname='OpenWrt-G'                            # 修改主机名称为OpenWrt-123
 
+# 设置时区和ntp服务器
+uci set system.@system[0].zonename='Asia/Shanghai'
+uci set system.@system[0].timezone='CST-8'
+
+uci del system.ntp.server
+uci add_list system.ntp.server='cn.ntp.org.cn'
+uci add_list system.ntp.server='time.pool.aliyun.com'
+uci add_list system.ntp.server='cn.pool.ntp.org'
+uci add_list system.ntp.server='time.apple.com'
+
 
 uci commit
 # Disable autostart by default for some packages

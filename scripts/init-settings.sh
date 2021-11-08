@@ -35,6 +35,17 @@ uci set vlmcsd.config.enabled='0'
 uci set uhttpd.main.rfc1918_filter='0'
 # /etc/init.d/uhttpd restart
 
+# 设置时区和ntp服务器
+uci set system.@system[0].zonename='Asia/Shanghai'
+uci set system.@system[0].timezone='CST-8'
+
+uci del system.ntp.server
+uci add_list system.ntp.server='cn.ntp.org.cn'
+uci add_list system.ntp.server='time.pool.aliyun.com'
+uci add_list system.ntp.server='cn.pool.ntp.org'
+uci add_list system.ntp.server='time.apple.com'
+
+
 uci commit
 
 # Disable opkg signature check
