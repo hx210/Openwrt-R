@@ -102,6 +102,11 @@ jobs:
           cd $OPENWRTROOT
           ./scripts/feeds install -a
 
+      - name: Basic
+        run: |
+          cd $OPENWRTROOT
+          ../scripts/basic.sh
+
       - name: Load Custom Configuration
         run: |
           [ -e files ] && mv files $OPENWRTROOT/files

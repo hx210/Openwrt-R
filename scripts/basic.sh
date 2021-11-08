@@ -32,5 +32,5 @@ ln -sf ../../../feeds/packages/lang/node-yarn ./package/feeds/packages/node-yarn
 
 
 
-# 生成默认配置及缓存
-#rm -rf .config
+# 生成默认配置
+rm -rf .config
