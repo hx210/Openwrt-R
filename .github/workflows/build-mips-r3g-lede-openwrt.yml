@@ -10,7 +10,7 @@ name: Max(0.0) MIPS-R3G OpenWrt
 
 on:
   repository_dispatch:
-    types: [lean, r3g, Source Code Update]
+    types: [lean, r3g]
   workflow_dispatch:
     inputs:
       ssh:
