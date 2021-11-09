@@ -25,7 +25,7 @@ on:
 
 env:
   TOOLCHAIN_TAG: openwrt-openwrt-master
-  TOOLCHAIN_NAME: toolchain-image-openwrt-openwrt-master-x86-generic.img
+  TOOLCHAIN_NAME: toolchain-image-openwrt-openwrt-master-x86-64.img
   CONFIG_FILE: config/x86/x86_generic-lean-target.config
   DIY_SH: scripts/op-openwrt.sh
   WEBROOT: /data/dnmp/www/openwrt.cc
