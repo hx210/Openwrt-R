@@ -31,6 +31,8 @@ svn co https://github.com/nxhack/openwrt-node-packages/trunk/node-yarn feeds/pac
 ln -sf ../../../feeds/packages/lang/node-yarn ./package/feeds/packages/node-yarn
 
 
+# Grub 2 解决x86  ERROR: package/boot/grub2 failed to build (build variant: pc)
+wget -qO - https://github.com/QiuSimons/openwrt-NoTengoBattery/commit/afed16a.patch | patch -p1
 
 # 生成默认配置
 rm -rf .config
