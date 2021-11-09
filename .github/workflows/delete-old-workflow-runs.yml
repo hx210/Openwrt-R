@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
   schedule:
-    - cron: 0 20 */7 * *
+    - cron: 0 20 */14 * *
 
 jobs:
   del_runs:
@@ -14,4 +14,4 @@ jobs:
         uses: GitRML/delete-workflow-runs@main
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          retain_days: 15
+          retain_days: 29

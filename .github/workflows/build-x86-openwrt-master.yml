@@ -10,7 +10,7 @@ name: V(OP) x86_generic OpenWrt
 
 on:
   repository_dispatch:
-    types: [op, x86, Source Code Update]
+    types: [op, x86]
   workflow_dispatch:
     inputs:
       ssh:
