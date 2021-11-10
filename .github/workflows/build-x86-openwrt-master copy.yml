@@ -105,7 +105,8 @@ jobs:
       - name: Basic
         run: |
           cd $OPENWRTROOT
-          sed -i 's/O3 -funsafe-math-optimizations/O2 -funsafe-math-optimizations/g' ../scripts/basic.sh
+          sed -i 's/sed -i 's/Os/O3 -funsafe-math-optimizations/#sed -i 's/Os/O3 -funsafe-math-optimizations/g' ../scripts/basic.sh
+
           cat ../scripts/basic.sh
                     
           ../scripts/basic.sh
@@ -114,7 +115,7 @@ jobs:
         run: |
           [ -e files ] && mv files $OPENWRTROOT/files
           [ -e $CONFIG_FILE ] && mv $CONFIG_FILE $OPENWRTROOT/.config
-          
+
           cd $OPENWRTROOT
           ../$DIY_SH
           ../scripts/preset-clash-core.sh 386
@@ -191,7 +192,7 @@ jobs:
         run: |
           cd $OPENWRTROOT/bin/targets/$TARGET/$SUBTARGET
           ls -a -l -h
-          
+
       - name: Upload Bin Folder
         uses: actions/upload-artifact@main
         if: steps.generate.outputs.GENERATE_STATUS == 'success'
@@ -355,7 +356,7 @@ jobs:
       - name: 电报机器人信息通知
         run: |
           curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=我亲爱的✨主人✨：您的${{ env.SUBTARGET }}-固件顺利编译完成了！💐https://github.com/hx210/Openwrt-R -$(cat wetransfer-uefi.log | grep https) #${{ env.SUBTARGET }}" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
-      
+
       - name: Create release
         id: create_release
         uses: ncipollo/release-action@v1 #https://github.com/ncipollo/release-action/tree/main
