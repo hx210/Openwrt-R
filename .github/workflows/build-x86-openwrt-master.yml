@@ -190,6 +190,7 @@ jobs:
       - name: Compress Img Files
         run: |
           cd $OPENWRTROOT/bin/targets/$TARGET/$SUBTARGET
+          ls -a -l -h
           gzip *.img
       - name: Upload Bin Folder
         uses: actions/upload-artifact@main
