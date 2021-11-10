@@ -31,7 +31,9 @@ svn co https://github.com/nxhack/openwrt-node-packages/trunk/node-yarn feeds/pac
 ln -sf ../../../feeds/packages/lang/node-yarn ./package/feeds/packages/node-yarn
 
 # Patch
-git apply ../patch/grub2/*.patch
+git config --global user.email "R@r.com"
+git config --global user.name "X"
+git am ../patch/grub2/*.patch
 
 
 
