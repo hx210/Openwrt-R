@@ -105,9 +105,9 @@ jobs:
       - name: Basic
         run: |
           cd $OPENWRTROOT
-          sed -i 's/sed -i 's/Os/O3 -funsafe-math-optimizations/#sed -i 's/Os/O3 -funsafe-math-optimizations/g' ../scripts/basic.sh
-
-          cat ../scripts/basic.sh
+          
+          cp -f ../patch/grub2 $OPENWRTROOT/package/boot/grub2/Makefile
+          
                     
           ../scripts/basic.sh
 
