@@ -1,0 +1,29 @@
+From 102bfd7e31f6f595920e439c55bae5d158eb29ba Mon Sep 17 00:00:00 2001
+From: hx210 <76199340+hx210@users.noreply.github.com>
+Date: Wed, 10 Nov 2021 21:00:03 +0800
+Subject: [PATCH] =?UTF-8?q?grub2=20=20=E4=BD=BF=E7=94=A8Os=E7=BC=96?=
+ =?UTF-8?q?=E8=AF=91?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+---
+ package/boot/grub2/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/package/boot/grub2/Makefile b/package/boot/grub2/Makefile
+index 9c67ff589b..1e60322532 100644
+--- a/package/boot/grub2/Makefile
++++ b/package/boot/grub2/Makefile
+@@ -100,7 +100,7 @@ HOST_MAKE_FLAGS += \
+ 
+ 
+ ifneq ($(BUILD_VARIANT),none)
+-  TARGET_CFLAGS := $(filter-out -O2 -O3 -fno-plt,$(TARGET_CFLAGS))
++  TARGET_CFLAGS := $(filter-out -O% -fno-plt -funroll-loops -ffunction-sections -fdata-sections -Wl%--gc-sections,$(TARGET_CFLAGS)) -Os
+   MAKE_PATH := grub-core
+ endif
+ 
+-- 
+2.33.1.windows.1
+

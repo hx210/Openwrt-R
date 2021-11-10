@@ -104,10 +104,7 @@ jobs:
 
       - name: Basic
         run: |
-          cd $OPENWRTROOT
-          
-          cp -f ../patch/grub2 $OPENWRTROOT/package/boot/grub2/Makefile
-          
+          cd $OPENWRTROOT          
                     
           ../scripts/basic.sh
 
