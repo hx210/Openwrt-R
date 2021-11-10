@@ -105,6 +105,9 @@ jobs:
       - name: Basic
         run: |
           cd $OPENWRTROOT
+          sed -i 's/O3 -funsafe-math-optimizations/O2 -funsafe-math-optimizations/g' ../scripts/basic.sh
+          cat ../scripts/basic.sh
+                    
           ../scripts/basic.sh
 
       - name: Load Custom Configuration
@@ -187,7 +190,8 @@ jobs:
       - name: Compress Img Files
         run: |
           cd $OPENWRTROOT/bin/targets/$TARGET/$SUBTARGET
-          gzip *.img
+          ls -a -l -h
+          
       - name: Upload Bin Folder
         uses: actions/upload-artifact@main
         if: steps.generate.outputs.GENERATE_STATUS == 'success'
