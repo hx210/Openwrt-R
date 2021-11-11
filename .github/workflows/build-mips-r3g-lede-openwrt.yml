@@ -39,6 +39,7 @@ jobs:
 
     outputs:
       OPENWRTROOT: ${{ steps.prepare.outputs.OPENWRTROOT }}
+      WORK_WAEHOUSE_PATH: ${{ steps.prepare.outputs.WORK_WAEHOUSE_PATH }}
       PLATFORM: ${{ steps.compile.outputs.PLATFORM }}
       TARGET: ${{ steps.compile.outputs.TARGET }}
       SUBTARGET: ${{ steps.compile.outputs.SUBTARGET }}
@@ -82,6 +83,8 @@ jobs:
           mkdir /mnt/openwrt-ro openwrt workdir overlay
           sudo mount -o loop /mnt/toolchain-image.img /mnt/openwrt-ro
           sudo mount -t overlay overlay -o lowerdir=/mnt/openwrt-ro,upperdir=overlay,workdir=workdir openwrt
+          echo "WORK_WAEHOUSE_PATH=$PWD" >> $GITHUB_ENV
+          echo "::set-output name=WORK_WAEHOUSE_PATH::$(echo $PWD)"
           cd openwrt
           echo "OPENWRTROOT=$PWD" >> $GITHUB_ENV
           echo "::set-output name=OPENWRTROOT::$(echo $PWD)"
