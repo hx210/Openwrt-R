@@ -13,6 +13,10 @@
 # git clone --depth=1 https://github.com/fw876/helloworld
 # popd
 
+
+# Docker 容器
+sed -i 's/+docker/+docker \\\n\t+dockerd/g' ./feeds/luci/applications/luci-app-dockerman/Makefile
+
 # Clone community packages to package/community
 mkdir package/community
 mkdir package/community1

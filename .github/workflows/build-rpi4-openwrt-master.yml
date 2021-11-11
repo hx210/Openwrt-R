@@ -109,6 +109,8 @@ jobs:
         run: |
           cd $OPENWRTROOT
           ../scripts/basic.sh
+          sed -i 's/O3 -funsafe-math-optimizations -funroll-loops -ffunction-sections -fdata-sections -Wl,--gc-sections/Os/g' include/target.mk
+
 
       - name: Load Custom Configuration
         run: |
