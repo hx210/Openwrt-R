@@ -35,7 +35,7 @@ git config --global user.email "R@r.com"
 git config --global user.name "X"
 git am ../patch/grub2/*.patch
 
-pushd feeds/packages
+pushd customfeeds/packages
 git am ../patch/haproxy/*.patch
 popd
 
