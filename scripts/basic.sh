@@ -36,7 +36,7 @@ git config --global user.name "X"
 git am ../patch/grub2/*.patch
 
 pushd customfeeds/packages
-git am ../patch/haproxy/*.patch
+git am $WORK_WAEHOUSE_PATH/patch/haproxy/*.patch
 popd
 
 
