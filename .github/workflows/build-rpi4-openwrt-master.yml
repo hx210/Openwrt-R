@@ -10,7 +10,7 @@ name: V(OP) Raspberry Pi 4 OpenWrt
 
 on:
   repository_dispatch:
-    types: [op, rpi4, Source Code Update]
+    types: [op, rpi4]
   workflow_dispatch:
     inputs:
       ssh:
