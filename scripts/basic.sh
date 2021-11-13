@@ -37,7 +37,7 @@ git am ../patch/grub2/*.patch
 
 
 # Patch jsonc
-patch -p1 <../patch/jsonc/use_json_object_new_int64.patch
+git am ../patch/jsonc/use_json_object_new_int64.patch
 
 pushd customfeeds/packages
 git am $WORK_WAEHOUSE_PATH/patch/haproxy/*.patch
