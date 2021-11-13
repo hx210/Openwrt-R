@@ -33,11 +33,12 @@ ln -sf ../../../feeds/packages/lang/node-yarn ./package/feeds/packages/node-yarn
 # Patch
 git config --global user.email "R@r.com"
 git config --global user.name "X"
+git am ../patch/jsonc/*.patch
 git am ../patch/grub2/*.patch
 
 
-# Patch jsonc
-git am ../patch/jsonc/use_json_object_new_int64.patch
+
+
 
 pushd customfeeds/packages
 git am $WORK_WAEHOUSE_PATH/patch/haproxy/*.patch
