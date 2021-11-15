@@ -43,9 +43,7 @@ cp -rf openwrt-packages/luci-app-pushbot/ need/
 cp -rf openwrt-packages/luci-app-argon-config/ need/
 
 
-#添加docker
-cp -rf openwrt-packages/luci-app-dockerman/ need/
-cp -rf openwrt-packages/luci-lib-docker/ need/
+
 
 
 
