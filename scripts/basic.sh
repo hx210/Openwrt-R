@@ -33,7 +33,7 @@ ln -sf ../../../feeds/packages/lang/node-yarn ./package/feeds/packages/node-yarn
 # Patch
 git config --global user.email "R@r.com"
 git config --global user.name "X"
-git am $WORK_WAEHOUSE_PATH/patch/jsonc/*.patch
+#git am $WORK_WAEHOUSE_PATH/patch/jsonc/*.patch
 
 git am $WORK_WAEHOUSE_PATH/patch/grub2/*.patch
 
