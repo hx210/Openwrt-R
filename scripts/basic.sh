@@ -39,7 +39,8 @@ git am $WORK_WAEHOUSE_PATH/patch/grub2/*.patch
 
 
 
-
+# Change default shell to zsh
+sed -i 's/\/bin\/ash/\/usr\/bin\/zsh/g' package/base-files/files/etc/passwd
 
 pushd customfeeds/packages
 git am $WORK_WAEHOUSE_PATH/patch/haproxy/*.patch
