@@ -33,9 +33,9 @@ ln -sf ../../../feeds/packages/lang/node-yarn ./package/feeds/packages/node-yarn
 # Patch
 git config --global user.email "R@r.com"
 git config --global user.name "X"
-#git am $WORK_WAEHOUSE_PATH/patch/jsonc/*.patch
+#git am $GITHUB_WORKSPACE/patch/jsonc/*.patch
 
-git am $WORK_WAEHOUSE_PATH/patch/grub2/*.patch
+git am $GITHUB_WORKSPACE/patch/grub2/*.patch
 
 
 
@@ -43,7 +43,7 @@ git am $WORK_WAEHOUSE_PATH/patch/grub2/*.patch
 sed -i 's/\/bin\/ash/\/usr\/bin\/zsh/g' package/base-files/files/etc/passwd
 
 pushd customfeeds/packages
-git am $WORK_WAEHOUSE_PATH/patch/haproxy/*.patch
+git am $GITHUB_WORKSPACE/patch/haproxy/*.patch
 popd
 
 
