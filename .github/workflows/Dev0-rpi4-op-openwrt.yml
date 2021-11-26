@@ -95,9 +95,9 @@ jobs:
         run: |
           cd $OPENWRTROOT
           mkdir customfeeds
-          $GITHUB_WORKSPACE/scripts/updata-feeds.sh
-
           chmod +x $GITHUB_WORKSPACE/scripts/*.sh
+
+          $GITHUB_WORKSPACE/scripts/updata-feeds.sh
           $GITHUB_WORKSPACE/scripts/pure.sh
       - name: Install Feeds
         run: |
