@@ -43,9 +43,6 @@ cp -rf openwrt-packages/luci-app-pushbot/ need/
 cp -rf openwrt-packages/luci-app-argon-config/ need/
 
 
-# ddns支持脚本
-
-cp -rf openwrt-packages/ddns-scripts-dnspod/ need/
 
 
 
