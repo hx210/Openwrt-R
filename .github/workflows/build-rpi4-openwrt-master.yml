@@ -95,10 +95,9 @@ jobs:
         run: |
           cd $OPENWRTROOT
           mkdir customfeeds
-          git clone --depth=1 https://github.com/openwrt/packages customfeeds/packages
-          git clone --depth=1 https://github.com/openwrt/luci customfeeds/luci
-          chmod +x ../scripts/*.sh
-          ../scripts/hook-feeds.sh
+          $GITHUB_WORKSPACE/scripts/updata-feeds.sh  
+          chmod +x $GITHUB_WORKSPACE/scripts/*.sh
+          $GITHUB_WORKSPACE/scripts/hook-feeds.sh
 
       - name: Install Feeds
         run: |
@@ -108,8 +107,7 @@ jobs:
       - name: Basic
         run: |
           cd $OPENWRTROOT
-          ../scripts/basic.sh
-          
+          $GITHUB_WORKSPACE/scripts/basic.sh
 
       - name: Load Custom Configuration
         run: |
@@ -119,11 +117,11 @@ jobs:
           cd $OPENWRTROOT
 
 
-          ../$DIY_SH
-          ../scripts/preset-clash-core.sh armv8
-          ../scripts/preset-terminal-tools.sh
-          ../scripts/enable-rpi4-wifi.sh
-          ../scripts/updata-feeds.sh
+          $GITHUB_WORKSPACE/$DIY_SH
+          $GITHUB_WORKSPACE/scripts/preset-clash-core.sh armv8
+          $GITHUB_WORKSPACE/scripts/preset-terminal-tools.sh
+          $GITHUB_WORKSPACE/scripts/enable-rpi4-wifi.sh
+          $GITHUB_WORKSPACE/scripts/updata-feeds.sh
 
       - name: SSH远程连接（配置固件）
         env:
@@ -182,14 +180,14 @@ jobs:
           echo "over_voltage=8" >> target/linux/bcm27xx/image/config.txt
 
           mkdir -p files/etc/uci-defaults/
-          cp ../scripts/init-settings.sh files/etc/uci-defaults/99-init-settings
+          cp $GITHUB_WORKSPACE/scripts/init-settings.sh files/etc/uci-defaults/99-init-settings
           mkdir -p files/etc/opkg
           cp ../data/opkg/distfeeds.conf.mirror files/etc/opkg
           mkdir -p files/www/snapshots
           cp -r bin/targets files/www/snapshots
           cp ../data/opkg/distfeeds.conf files/etc/opkg
           mkdir -p files/bin
-          cp ../scripts/rtools.sh files/bin/rtools
+          cp $GITHUB_WORKSPACE/scripts/rtools.sh files/bin/rtools
           make package/install -j$(nproc) || make package/install -j$(nproc) V=s
           make target/install -j$(nproc) || make target/install -j$(nproc) V=s
           make checksum

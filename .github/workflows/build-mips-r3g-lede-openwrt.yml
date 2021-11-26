@@ -97,8 +97,8 @@ jobs:
           mkdir customfeeds
           git clone --depth=1 https://github.com/coolsnowwolf/packages customfeeds/packages
           git clone --depth=1 https://github.com/coolsnowwolf/luci customfeeds/luci
-          chmod +x ../scripts/*.sh
-          ../scripts/hook-feeds.sh
+          chmod +x $GITHUB_WORKSPACE/scripts/*.sh
+          $GITHUB_WORKSPACE/scripts/hook-feeds.sh
 
       - name: Install Feeds
         run: |
@@ -108,7 +108,7 @@ jobs:
       - name: Basic
         run: |
           cd $OPENWRTROOT
-          ../scripts/basic.sh
+          $GITHUB_WORKSPACE/scripts/basic.sh
 
       - name: Load Custom Configuration
         run: |
@@ -116,9 +116,9 @@ jobs:
           [ -e $CONFIG_FILE ] && mv $CONFIG_FILE $OPENWRTROOT/.config
           cat config/mips/mips-lean-extra.config >> $OPENWRTROOT/.config
           cd $OPENWRTROOT
-          ../$DIY_SH
-          ../scripts/preset-terminal-tools.sh
-          ../scripts/updata-feeds.sh
+          $GITHUB_WORKSPACE/$DIY_SH
+          $GITHUB_WORKSPACE/scripts/preset-terminal-tools.sh
+          $GITHUB_WORKSPACE/scripts/updata-feeds.sh
 
       - name: SSH远程连接（配置固件）
         env:
@@ -172,7 +172,7 @@ jobs:
           sed -i "s/platform/$PLATFORM/g" distfeeds*.conf
           cd $OPENWRTROOT
           mkdir -p files/etc/uci-defaults/
-          cp ../scripts/init-settings-mips.sh files/etc/uci-defaults/99-init-settings
+          cp $GITHUB_WORKSPACE/scripts/init-settings-mips.sh files/etc/uci-defaults/99-init-settings
           mkdir -p files/etc/opkg
           cp ../data/opkg/distfeeds.conf.mirror files/etc/opkg
           cp ../data/opkg/distfeeds.conf files/etc/opkg
