@@ -95,8 +95,8 @@ jobs:
         run: |
           cd $OPENWRTROOT
           mkdir customfeeds
-          git clone --depth=1 https://github.com/openwrt/packages customfeeds/packages
-          git clone --depth=1 https://github.com/openwrt/luci customfeeds/luci
+          $GITHUB_WORKSPACE/scripts/updata-feeds.sh
+
           chmod +x $GITHUB_WORKSPACE/scripts/*.sh
           $GITHUB_WORKSPACE/scripts/pure.sh
       - name: Install Feeds

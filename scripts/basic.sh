@@ -42,7 +42,7 @@ git am $GITHUB_WORKSPACE/patch/grub2/*.patch
 # Change default shell to zsh
 sed -i 's/\/bin\/ash/\/usr\/bin\/zsh/g' package/base-files/files/etc/passwd
 
-pushd customfeeds/packages
+pushd feeds/packages
 git am $GITHUB_WORKSPACE/patch/haproxy/*.patch
 popd
 
