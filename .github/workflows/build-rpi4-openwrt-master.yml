@@ -97,7 +97,6 @@ jobs:
           mkdir customfeeds
           $GITHUB_WORKSPACE/scripts/updata-feeds.sh  
           chmod +x $GITHUB_WORKSPACE/scripts/*.sh
-          $GITHUB_WORKSPACE/scripts/hook-feeds.sh
 
       - name: Install Feeds
         run: |

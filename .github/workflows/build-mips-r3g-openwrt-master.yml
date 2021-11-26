@@ -98,7 +98,6 @@ jobs:
           git clone --depth=1 https://github.com/openwrt/packages customfeeds/packages
           git clone --depth=1 https://github.com/openwrt/luci customfeeds/luci
           chmod +x $GITHUB_WORKSPACE/scripts/*.sh
-          $GITHUB_WORKSPACE/scripts/hook-feeds.sh
 
       - name: Install Feeds
         run: |
